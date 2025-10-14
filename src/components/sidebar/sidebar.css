@@ -1,0 +1,214 @@
+/* Sidebar clara + accent #fe5e3e */
+:root {
+  --sb-width: 210px;
+  --sb-width-closed: 62px;
+  --accent: #fe5e3e;
+  --accent-soft: #ff6a4c;
+  --bg: #f5f7fa;
+  --bg-side: #ffffff;
+  --text: #1f242b;
+  --text-muted: #6a727d;
+  --border: rgba(0,0,0,0.14);
+  --radius: 10px;
+  --speed: 160ms;
+  --shadow: 0 4px 16px -4px rgba(0,0,0,0.18), 0 2px 6px -2px rgba(0,0,0,0.08);
+}
+
+/* Container */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sb-width-closed);
+  background: var(--bg-side);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 10px;
+  gap: 12px;
+  transition: width var(--speed) ease;
+  box-shadow: var(--shadow);
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* Aberta */
+.sidebar.open {
+  width: var(--sb-width);
+}
+
+/* Botão hambúrguer */
+.toggle-btn {
+  height: 40px; width: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f1f4f7;
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background var(--speed), border-color var(--speed), transform 120ms;
+}
+
+.toggle-btn:hover {
+  background: #ffe9e4;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.toggle-btn:active {
+  background: #ffd6cc;
+  transform: translateY(0);
+}
+
+/* Conteúdo */
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.sidebar-content h2 {
+  margin: 4px 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  transition: opacity var(--speed);
+}
+
+.sidebar:not(.open) .sidebar-content h2 {
+  opacity: 0;
+}
+
+/* Lista */
+.sidebar-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d9dee3 transparent;
+}
+
+.sidebar-content ul::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar-content ul::-webkit-scrollbar-thumb {
+  background: #d9dee3;
+  border-radius: 20px;
+}
+
+/* Itens */
+.sidebar-content li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background var(--speed),
+    color var(--speed),
+    border-color var(--speed),
+    padding var(--speed);
+}
+
+.sidebar-content li:hover {
+  background: #fff2ee;
+  border-color: var(--border);
+}
+
+.sidebar-content li:active {
+  background: #ffe3dc;
+}
+
+.sidebar-content li.active {
+  background: #ffe4dd;
+  border-color: var(--accent);
+  color: var(--accent-soft);
+  font-weight: 700;
+}
+
+/* Fechada: esconde texto mantendo emoji */
+.sidebar:not(.open) .sidebar-content li {
+  justify-content: center;
+  padding: 0;
+  font-size: 0;
+}
+
+.sidebar:not(.open) .sidebar-content li span {
+  display: none;
+}
+
+/* Tooltip ao fechar */
+.sidebar:not(.open) .sidebar-content li:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #2f3439;
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.25);
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 6px 18px -4px rgba(0,0,0,0.4);
+  z-index: 10;
+}
+
+/* Reabre */
+.sidebar.open .sidebar-content li {
+  font-size: 0.95rem;
+  padding: 0 12px;
+}
+
+/* Mobile */
+@media (max-width: 780px) {
+  .sidebar {
+    width: var(--sb-width-closed);
+    transition: width var(--speed), transform var(--speed);
+  }
+  .sidebar.open {
+    width: var(--sb-width);
+    
+  }
+  
+}
+
+.sidebar-content li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  
+}
+
+.sidebar-content li .icon {
+  width: 20px;
+  height: 20px;
+
+}
+.sidebar:not(.open) .sidebar-content li {
+  display: none;
+}
