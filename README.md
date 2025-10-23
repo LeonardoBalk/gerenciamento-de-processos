@@ -7,15 +7,14 @@ Sistema de workflow acadêmico focado em modelagem de dados e prototipação fun
 - [Arquitetura e Tecnologias](#arquitetura-e-tecnologias)
 - [Funcionalidades Implementadas](#funcionalidades-implementadas)
 - [Estrutura de Pastas (parcial)](#estrutura-de-pastas-parcial)
-- [Banco de Dados (resumo do modelo atual)](#banco-de-dados-resumo-do-modelo-atual)
+- [Banco de Dados](#banco-de-dados-resumo-do-modelo-atual)
 - [Configuração (.env)](#configuração-env)
 - [Como Rodar Localmente](#como-rodar-localmente)
 - [Configuração de Storage (Anexos)](#configuração-de-storage-anexos)
 - [Fluxos do Usuário](#fluxos-do-usuário)
-- [Decisões de UI/UX](#decisões-de-uiux)
 - [Prints das Telas](#prints-das-telas)
 - [Limitações Atuais](#limitações-atuais)
-- [Roadmap (Próximos Passos)](#roadmap-próximos-passos)
+- [Próximos Passos](#roadmap-próximos-passos)
 
 ---
 
