@@ -6,6 +6,7 @@ import Sidebar from './components/sidebar/sidebar';
 import Templates from './pages/templates/templates';
 import NovoTemplate from './pages/novoTemplate/novoTemplate';
 import VisualizarTemplate from './pages/visualizarTemplate/visualizarTemplate';
+import NovoProcesso from './pages/novoProcesso/novoProcesso';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/templates" element={<Templates />} />
         <Route path="/templates/novo" element={<NovoTemplate />} />
         <Route path="/templates/:id" element={<VisualizarTemplate />} />
+        <Route path="/processos/novo" element={<NovoProcesso />} />
       </Routes>
     </Router>
   );

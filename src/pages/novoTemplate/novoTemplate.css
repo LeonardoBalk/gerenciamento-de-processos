@@ -12,7 +12,7 @@
 }
 
 .template-new-page .form-card {
-  background: var(--bg, #fff);
+  background: #fff;
   border: 1px solid var(--border, #e6e6e6);
   border-radius: var(--radius, 10px);
   box-shadow: var(--shadow, 0 2px 10px rgba(0,0,0,0.06));
@@ -67,7 +67,7 @@
 }
 .template-new-page .btn-secondary {
   appearance: none;
-  background: transparent;
+  background: var(--accent);
   border: 1px dashed var(--border, #e6e6e6);
   color: var(--text, #222);
   padding: 8px 12px;
@@ -186,4 +186,25 @@
     height: 32px;
     font-size: 13px;
   }
+}
+
+.template-new-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* ocupa a tela toda */
+  overflow: hidden; /* evita scroll duplo */
+  background: #fff;
+}
+
+/* Faz o conteúdo rolar dentro do main */
+.template-new-page main.home-main {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 80px; /* espaço pro final do scroll */
+}
+
+/* Garante que o container interno não trave o scroll */
+.template-new-page main.home-main .container {
+  min-height: 100%;
+  
 }

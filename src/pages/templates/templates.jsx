@@ -218,13 +218,13 @@ export default function Templates() {
             </div>
           </section>
 
-          <section className="tabela-card">
+          <section className="tabela-template">
             <div className="tabela-head">
               <h3>Templates</h3>
               {!loading && <span className="badge">{templatesFiltrados.length}</span>}
             </div>
 
-            <div className="tabela-scroll">
+            <div className="tabela-template-scroll">
               <table className="tabela">
                 <colgroup>
                   <col className="col-name" />

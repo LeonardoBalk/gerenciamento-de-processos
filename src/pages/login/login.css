@@ -1,6 +1,3 @@
-/* Dark Mode + Accent (#fe5e3e) — Modern desktop-only */
-
-/* Color system */
 :root {
   --bg: #0b0c10;
   --bg-elev-1: #0f1116;
@@ -17,14 +14,21 @@
   --accent-700: #e34b2e; /* active */
   --accent-ring: rgba(254, 94, 62, 0.25);
 
+  --error: #ff5a5a;
+  --warn: #ffcc66;
+  --ok: #2fd27d;
+
   --radius: 14px;
   --radius-sm: 10px;
 
   --shadow-1: 0 14px 40px rgba(0, 0, 0, 0.45);
   --card-blur: saturate(140%) blur(12px);
+
+  --field-h: 52px;
+  --space: 16px;
 }
 
-/* Baseline */
+/* baseline */
 *,
 *::before,
 *::after {
@@ -33,6 +37,7 @@
 
 html, body {
   height: 100%;
+  color-scheme: dark; /* sugere tema escuro para controles nativos */
 }
 
 body {
@@ -50,9 +55,11 @@ body {
   place-items: center;
   padding: 32px;
   overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Subtle grid pattern */
+/* textura sutil */
 body::before {
   content: "";
   position: fixed; inset: 0;
@@ -66,11 +73,10 @@ body::before {
   opacity: .5;
 }
 
-/* Desktop-only container (fixed width) */
+/* container responsivo (desktop fixo, mobile fluido) */
 .login-container {
-  width: 520px;           /* largura fixa para desktop */
+  width: min(520px, 100%);
   max-width: 520px;
-  min-width: 520px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -78,12 +84,13 @@ body::before {
   backdrop-filter: var(--card-blur);
   -webkit-backdrop-filter: var(--card-blur);
   padding: 32px;
-  animation: cardIn 420ms cubic-bezier(.21, .95, .21, .99) both;
+  animation: card-in 420ms cubic-bezier(.21, .95, .21, .99) both;
   position: relative;
   overflow: clip;
+  isolation: isolate; /* garante que efeitos fiquem dentro do card */
 }
 
-/* Accent glow border */
+/* brilho de borda acentuado */
 .login-container::after {
   content: "";
   position: absolute; inset: 0;
@@ -96,16 +103,36 @@ body::before {
   pointer-events: none;
 }
 
-/* Heading */
+/* cabecalho com opcional logo */
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.login-header .logo {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background:
+    radial-gradient(60% 60% at 30% 20%, rgba(255,255,255,.22), transparent 55%),
+    linear-gradient(180deg, var(--accent-600), var(--accent));
+  box-shadow: 0 6px 18px rgba(254,94,62,.35);
+}
 .login-container h2 {
-  margin: 0 0 22px 0;
+  margin: 0 0 6px 0;
   font-weight: 800;
   letter-spacing: 0.2px;
   font-size: 1.6rem;
   line-height: 1.2;
-  color: var(--text);
+  color: var(--accent);
+}
+.login-subtitle {
+  margin: 0 0 20px 0;
+  color: var(--text-muted);
+  font-size: .98rem;
 }
 
+/* linha acentuada sob o titulo */
 .login-container h2::after {
   content: "";
   display: block;
@@ -116,37 +143,63 @@ body::before {
   background: linear-gradient(90deg, var(--accent) 0%, rgba(254, 94, 62, 0.2) 100%);
 }
 
-/* Form */
+/* formulario */
 .login-container form {
   display: grid;
-  gap: 16px;
+  gap: var(--space);
 }
 
-/* Inputs */
+/* grupo de campos com icone opcional */
+.input-group {
+  position: relative;
+}
+.input-group .left-ico {
+  position: absolute;
+  left: 12px; top: 50%;
+  translate: 0 -50%;
+  width: 18px; height: 18px;
+  opacity: .75;
+  pointer-events: none;
+}
+.input-group .right-action {
+  position: absolute;
+  right: 10px; top: 50%;
+  translate: 0 -50%;
+  height: 28px; min-width: 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background 140ms, color 140ms, border-color 140ms, transform 120ms;
+}
+.input-group .right-action:hover {
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  border-color: rgba(255,255,255,.08);
+}
+.input-group.has-left-icon input {
+  padding-left: 42px; /* espaco para icone */
+}
+
+/* inputs */
 .login-container input[type="email"],
-.login-container input[type="password"] {
+.login-container input[type="password"],
+.login-container input[type="text"] {
   width: 100%;
-  height: 52px;
+  height: var(--field-h);
   padding: 0 16px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015)) border-box,
-    linear-gradient(180deg, #0f1116, #0d1015) padding-box;
+  background: var(--bg);
   color: var(--text);
   outline: none;
   transition: border-color 150ms ease, box-shadow 150ms ease, background 200ms ease, transform 120ms ease;
   font-size: 0.98rem;
 }
-
-.login-container input::placeholder {
-  color: var(--placeholder);
-}
-
-.login-container input:hover {
-  border-color: rgba(255,255,255,0.14);
-}
-
+.login-container input::placeholder { color: var(--placeholder); }
+.login-container input:hover { border-color: rgba(255,255,255,0.14); }
 .login-container input:focus {
   border-color: var(--accent);
   box-shadow:
@@ -156,7 +209,31 @@ body::before {
   transform: translateY(-1px);
 }
 
-/* Autofill dark fix */
+/* estados opcionais de validacao */
+.input-error {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 0 4px rgba(255,90,90,.15) !important;
+  animation: field-shake 360ms ease-in-out 1;
+}
+.input-success {
+  border-color: rgba(47,210,125,.45) !important;
+  box-shadow: 0 0 0 4px rgba(47,210,125,.12) !important;
+}
+
+/* texto auxiliar e erro */
+.helper-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: -6px;
+}
+.error-text {
+  color: var(--error);
+  font-weight: 700;
+  font-size: .9rem;
+  margin-top: -6px;
+}
+
+/* fix para autofill escuro */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
@@ -167,13 +244,58 @@ input:-webkit-autofill:focus {
   border: 1px solid rgba(255,255,255,0.12);
 }
 
-/* Submit */
+/* acoes e botao submit */
+.actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: -6px;
+}
+.remember-wrap {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--text-muted);
+  font-size: .95rem;
+}
+.remember-wrap input[type="checkbox"] {
+  appearance: none;
+  width: 18px; height: 18px; border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: linear-gradient(180deg, #0f1116, #0d1015);
+  display: grid; place-items: center;
+  transition: border-color 140ms, background 140ms;
+}
+.remember-wrap input[type="checkbox"]:checked {
+  border-color: var(--accent);
+  background:
+    radial-gradient(100% 100% at 50% 0%, rgba(255,255,255,.25), transparent 55%),
+    linear-gradient(180deg, var(--accent-600), var(--accent));
+}
+.forgot-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+}
+.forgot-link::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -1px;
+  height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), rgba(254,94,62,0.0));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 180ms ease;
+}
+.forgot-link:hover::after,
+.forgot-link:focus-visible::after { transform: scaleX(1); }
+
 .login-container button[type="submit"] {
   margin-top: 8px;
-  height: 52px;
+  height: var(--field-h);
   border: none;
   border-radius: var(--radius-sm);
-  color: #0a0b0f;
+  color: #f3f0f0;
   font-weight: 800;
   letter-spacing: 0.2px;
   cursor: pointer;
@@ -186,7 +308,6 @@ input:-webkit-autofill:focus {
   transition: transform 120ms ease, box-shadow 150ms ease, filter 150ms ease;
   font-size: 1rem;
 }
-
 .login-container button[type="submit"]:hover {
   transform: translateY(-1px);
   box-shadow:
@@ -194,7 +315,6 @@ input:-webkit-autofill:focus {
     inset 0 -2px 0 rgba(0,0,0,.15);
   filter: saturate(106%);
 }
-
 .login-container button[type="submit"]:active {
   transform: translateY(0);
   background: linear-gradient(180deg, var(--accent), var(--accent-700));
@@ -202,21 +322,35 @@ input:-webkit-autofill:focus {
     0 8px 18px rgba(254,94,62,.36),
     inset 0 2px 0 rgba(255,255,255,.18);
 }
-
 .login-container button[type="submit"]:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   filter: grayscale(10%);
 }
 
-/* Mode switch */
+/* estado de loading no botao  */
+.login-container button[type="submit"].is-loading {
+  position: relative;
+  pointer-events: none;
+}
+.login-container button[type="submit"].is-loading::before {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 18px; height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(0,0,0,.18);
+  border-top-color: rgba(0,0,0,.6);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* mudanca de modo (login <-> cadastro) */
 .login-container p {
   margin: 16px 0 0;
   color: var(--text-muted);
   font-size: 0.95rem;
   text-align: center;
 }
-
 .login-container .switch-mode {
   color: var(--accent);
   cursor: pointer;
@@ -226,7 +360,6 @@ input:-webkit-autofill:focus {
   padding-bottom: 2px;
   outline: none;
 }
-
 .login-container .switch-mode::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: -1px;
@@ -236,50 +369,86 @@ input:-webkit-autofill:focus {
   transform: scaleX(0);
   transition: transform 180ms ease;
 }
-
 .login-container .switch-mode:hover::after,
 .login-container .switch-mode:focus-visible::after {
   transform: scaleX(1);
 }
 
-/* Focus accessibility */
+/* botoes oauth opcionais */
+.oauth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+.btn-oauth {
+  height: 46px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  color: var(--text);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer;
+  transition: transform 120ms, border-color 140ms, background 160ms, filter 150ms;
+}
+.btn-oauth:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,.22);
+  filter: saturate(104%);
+}
+
+/* acessibilidade de foco */
 .login-container .switch-mode:focus-visible,
-.login-container button[type="submit"]:focus-visible {
+.login-container .btn-oauth:focus-visible,
+.login-container input:focus-visible,
+.login-container button[type="submit"]:focus-visible,
+.forgot-link:focus-visible,
+.input-group .right-action:focus-visible {
   box-shadow: 0 0 0 4px var(--accent-ring);
   border-radius: var(--radius-sm);
+  outline: none;
 }
 
-/* Optional states */
-.input-error {
-  border-color: #ff5a5a !important;
-  box-shadow: 0 0 0 4px rgba(255,90,90,.15) !important;
-}
-
-.helper-text {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: -6px;
-}
-
-/* Entrance animation */
-@keyframes cardIn {
+/* animacoes */
+@keyframes card-in {
   from { opacity: 0; transform: translateY(12px) scale(0.985); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes field-shake {
+  0% { transform: translateX(0) }
+  20% { transform: translateX(-6px) }
+  40% { transform: translateX(5px) }
+  60% { transform: translateX(-4px) }
+  80% { transform: translateX(3px) }
+  100% { transform: translateX(0) }
+}
 
-/* Reduced motion */
+/* reducao de movimento */
 @media (prefers-reduced-motion: reduce) {
   .login-container,
   .login-container button[type="submit"],
   .login-container input[type="email"],
   .login-container input[type="password"],
-  .login-container .switch-mode::after {
+  .login-container .switch-mode::after,
+  .btn-oauth,
+  .input-group .right-action {
     transition: none !important;
     animation: none !important;
   }
 }
 
-/* Scrollbar (WebKit) */
+/* responsivo */
+@media (max-width: 560px) {
+  body { padding: 20px; }
+  .login-container { padding: 24px; }
+  .oauth-grid { grid-template-columns: 1fr; }
+}
+
+/* scrollbar (webkit) */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: #0a0b0f; }
 ::-webkit-scrollbar-thumb {
