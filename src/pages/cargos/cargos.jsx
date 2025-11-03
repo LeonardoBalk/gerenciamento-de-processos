@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import Sidebar from '../../components/sidebar/sidebar'
-import './Cargos.css'
+import './cargos.css'
 
 export default function Cargos() {
   const navigate = useNavigate()

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import Sidebar from '../../components/sidebar/sidebar'
-import './NovoProcesso.css'
+import './novoProcesso.css'
 
 export default function NovoProcesso() {
   const navigate = useNavigate()

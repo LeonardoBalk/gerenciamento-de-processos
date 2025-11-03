@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
-import './Home.css'
+import './home.css'
 import Sidebar from '../../components/sidebar/sidebar'
 
 export default function Home() {

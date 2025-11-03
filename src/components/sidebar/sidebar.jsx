@@ -1,4 +1,4 @@
-import './Sidebar.css'
+import './sidebar.css'
 
 export default function Sidebar({ open, setOpen, onNavigate, canManageCargos, userCargo }) {
   // decide permissao: usa boolean se vier, senao deriva do cargo textual

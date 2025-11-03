@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import Sidebar from '../../components/sidebar/sidebar'
-import './Templates.css'
+import './templates.css'
 
 export default function Templates() {
   const navigate = useNavigate()

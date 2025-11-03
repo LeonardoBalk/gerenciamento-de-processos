@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase'
-import './Login.css'
+import './login.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
