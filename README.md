@@ -1,6 +1,5 @@
 # Flowa — Gerenciamento de processos (PGBD 2025/2)
-
-![alt text](<logo flowa.png>)
+<img width="1536" height="432" alt="logo flowa" src="https://github.com/user-attachments/assets/e1894a5a-4317-4e36-9ad0-af1e1e2f0ecc" />
 
 Sistema de workflow focado em modelagem de dados e prototipação funcional. Este README descreve o que foi implementado e como executar localmente.
 
