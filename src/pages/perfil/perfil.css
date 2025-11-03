@@ -1,0 +1,212 @@
+/* estilos exclusivos da pagina perfil */
+
+/* reset e tema (inspirado em templates.css) */
+.profile-page, .profile-page * { box-sizing: border-box; }
+.profile-page {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --border: rgba(0,0,0,0.12);
+
+  --text: #1e2329;
+  --text-muted: #5b6470;
+  --placeholder: #8a95a2;
+
+  --accent: #fe5e3e;
+  --accent-hover: #ff6a4c;
+  --accent-active: #e34b2e;
+  --accent-ring: rgba(254,94,62,0.28);
+
+  --shadow-1: 0 6px 20px -6px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
+
+  --radius-lg: 16px;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  --header-h: 68px;
+  --sb-closed: 60px;
+  --sb-open: 220px;
+}
+
+/* base e container principal iguais a templates */
+.profile-page .home-header { background: var(--surface); border-bottom: 1px solid var(--border); }
+.profile-page .home-main {
+  min-height: calc(100vh - var(--header-h));
+  padding-top: var(--header-h);
+  margin-left: var(--sb-closed);
+  transition: margin-left .3s ease;
+  background: var(--bg);
+}
+.profile-page .home-main.shift { margin-left: var(--sb-open); }
+.profile-page .home-main > .container {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  color: var(--text);
+}
+
+/* alertas */
+.pf-alert { margin: 0; padding: 12px 14px; border-radius: var(--radius); font-weight: 700; }
+.pf-alert.error { background: #ffe9e9; color: #7c2222; border: 1px solid rgba(215,40,40,0.5); }
+.pf-alert.success { background: #eef9f1; color: #1e6b34; border: 1px solid #bfe3c9; }
+
+/* hero de perfil com visual do tema */
+.pf-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  background:
+    radial-gradient(1200px 200px at -10% -30%, #fff4f1 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff, #ffffff);
+}
+.pf-hero-left { display: flex; align-items: center; gap: 14px; }
+.pf-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+  color: #fff; font-weight: 900;
+  box-shadow: 0 3px 8px rgba(254,94,62,0.35);
+}
+.pf-hero-meta { display: grid; gap: 2px; }
+.pf-hero-name { font-weight: 900; letter-spacing: .3px; }
+.pf-hero-sub { color: var(--text-muted); font-size: .95rem; }
+.pf-hero-chip {
+  display: inline-grid; place-items: center;
+  height: 22px; padding: 0 10px;
+  border-radius: 999px;
+  font-size: .78rem; font-weight: 800; letter-spacing: .2px;
+  color: #943d18; background: #ffd7cfee; border: 1px solid rgba(0,0,0,0.08);
+}
+.pf-hero-right { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* botoes seguindo templates */
+.pf-btn {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 140ms, color 140ms, background 140ms, transform 120ms, box-shadow 150ms;
+}
+.pf-btn:hover { border-color: var(--accent); color: var(--accent); background: #fff4f1; transform: translateY(-2px); }
+.pf-btn.primary {
+  color: #fff;
+  border: none;
+  background: linear-gradient(180deg, var(--accent-hover), var(--accent));
+  box-shadow: 0 6px 16px -4px rgba(254,94,62,0.45);
+}
+.pf-btn.primary:hover { filter: saturate(108%); transform: translateY(-2px); }
+.pf-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+/* grid de cards */
+.pf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 960px) { .pf-grid { grid-template-columns: 1fr; } }
+
+/* cards iguais ao card de tabela em templates */
+.pf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.pf-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #ff6344ee;
+}
+.pf-card-head h3 {
+  margin: 0;
+  font-size: .95rem;
+  font-weight: 900;
+  letter-spacing: .35px;
+  color: #ffffff;
+}
+.pf-card-body { padding: 14px 16px; display: grid; gap: 10px; }
+
+/* linhas do form */
+.pf-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.pf-k { color: var(--text-muted); font-weight: 800; }
+.pf-v { display: grid; }
+
+/* inputs no padrao da pagina templates */
+.pf-v input[type="text"],
+.pf-v input[type="password"] {
+  height: 42px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  padding: 0 12px;
+  font-size: .95rem;
+  transition: border-color 150ms, box-shadow 150ms, transform 120ms, background 160ms;
+}
+.pf-v input::placeholder { color: var(--placeholder); }
+.pf-v input:hover { border-color: rgba(0,0,0,0.25); }
+.pf-v input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-ring);
+  outline: none;
+  transform: translateY(-2px);
+}
+.pf-readonly {
+  display: inline-block;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  background: #fafcfe;
+  line-height: 42px;
+  color: var(--text);
+}
+
+/* acoes do card e nota */
+.pf-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.pf-note {
+  padding: 10px 12px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  background: #fafcfe;
+}
+
+/* skeleton */
+.pf-skeleton .skl {
+  display: block;
+  width: 100%;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, #eaeef2, #f3f6f9, #eaeef2);
+  background-size: 200% 100%;
+  animation: pf-shine 1.2s linear infinite;
+}
+@keyframes pf-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* foco visivel */
+.profile-page button:focus-visible,
+.profile-page input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

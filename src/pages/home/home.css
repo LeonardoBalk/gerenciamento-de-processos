@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 :root {
   --bg: #f5f7fa;
   --bg-elev-1: #ffffff;
@@ -69,9 +71,9 @@ body {
   height: 100%;
 }
 
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 5px; }
 .brand img { width: 28px; height: 28px; }
-.brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: .3px; color: var(--accent); }
+.brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: .3px; color: var(--accent); font-family: 'Poppins', sans-serif; }
 
 .header-right { display: flex; align-items: center; gap: 12px; }
 .user-pill { display: flex; align-items: center; gap: 10px; background: #f1f4f7; border: 1px solid var(--border); padding: 6px 12px; border-radius: 999px; }

@@ -1,0 +1,176 @@
+/* estilos exclusivos da pagina meus processos */
+
+/* reset local */
+.meus-processos-page, .meus-processos-page * { box-sizing: border-box; }
+
+/* variaveis locais alinhadas ao templates.css */
+.meus-processos-page {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --border: rgba(0,0,0,0.12);
+
+  --text: #1e2329;
+  --text-muted: #5b6470;
+  --placeholder: #8a95a2;
+
+  --accent: #fe5e3e;
+  --accent-hover: #ff6a4c;
+  --accent-active: #e34b2e;
+  --accent-ring: rgba(254,94,62,0.28);
+}
+
+/* container */
+.meus-processos-page .home-header { background: var(--surface); border-bottom: 1px solid var(--border); }
+.meus-processos-page .home-main .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; color: var(--text); }
+
+/* filtros */
+.mp-filtros {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 240px)) minmax(320px, 1fr);
+  gap: 10px 14px;
+  align-items: end;
+  margin: 10px 0 12px;
+  margin-top: 5%;
+}
+.mp-field { display: grid; gap: 6px; }
+.mp-field label { font-size: 12px; color: var(--text-muted); }
+.mp-field select, .mp-field input[type="text"] {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 150ms, box-shadow 150ms, transform 120ms;
+}
+.mp-field select:hover, .mp-field input[type="text"]:hover { border-color: rgba(0,0,0,0.25); }
+.mp-field select:focus, .mp-field input[type="text"]::placeholder { color: var(--placeholder); }
+.mp-field select:focus, .mp-field input[type="text"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-ring);
+  transform: translateY(-2px);
+}
+.mp-field-search .mp-search-wrap { position: relative; }
+.mp-field-search .mp-search-ico {
+  position: absolute; right: 10px; top: 50%; width: 14px; height: 14px; transform: translateY(-50%); opacity: .65; pointer-events: none;
+  background: radial-gradient(circle at 40% 40%, #656f7b 25%, transparent 26%), conic-gradient(from 45deg, #656f7b 0 25%, transparent 0 100%);
+  border-radius: 50%;
+}
+
+/* card da tabela */
+.mp-table-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px -6px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* cabecalho do card */
+.mp-table-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #ff6344ee;
+}
+.mp-table-head h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 700; letter-spacing: .3px; }
+.mp-badge {
+  display: inline-grid; place-items: center;
+  padding: 2px 8px; height: 22px;
+  font-size: 12px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  border-radius: 999px;
+  background: #ffd7cfee;
+  border: 1px solid rgba(0,0,0,0.12);
+  color: #943d18;
+}
+
+/* area de scroll da tabela (scroll interno com header sticky) */
+.mp-table-scroll {
+  width: 100%;
+  max-height: 60vh;      /* controla a altura visivel da lista */
+  overflow: auto;        /* ativa scroll vertical e horizontal se precisar */
+  background: var(--surface);
+}
+
+/* tabela */
+.mp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  background: var(--surface);
+  color: var(--text);
+  font-size: .9rem;
+}
+.mp-col-template { width: 36%; }
+.mp-col-stage    { width: 28%; }
+.mp-col-status   { width: 14%; }
+.mp-col-date     { width: 12%; }
+.mp-col-actions  { width: 10%; }
+
+/* linhas e celulas */
+.mp-table th, .mp-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  vertical-align: middle;
+}
+.mp-table td { font-size: 14px; line-height: 1.35; }
+
+/* cabecalho sticky dentro do container com overflow */
+.mp-table thead th {
+  position: sticky; top: 0; z-index: 2;
+  text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .02em;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+/* zebra e hover */
+.mp-table tbody tr:nth-child(even) td { background: #f8fafc; }
+.mp-table tbody tr:hover td { background: #f3f6f9; }
+
+/* conteudo */
+.mp-strong { font-weight: 600; }
+.mp-empty { text-align: center; color: var(--text-muted); padding: 16px 0; }
+
+/* status pill */
+.mp-status-pill {
+  display: inline-grid; place-items: center;
+  height: 24px; padding: 0 10px;
+  border-radius: 999px; font-size: 12px; font-weight: 600;
+  border: 1px solid rgba(0,0,0,0.08);
+  color: #555; background: #f7f7f7; white-space: nowrap;
+}
+.mp-status-pill.run { background: #fff2e6; color: #8a4d1a; border-color: #ffd7c2; }
+.mp-status-pill.ok  { background: #eaf7f0; color: #156c2e; border-color: #c6e9d3; }
+
+/* botoes */
+.mp-btn-small {
+  appearance: none; background: #fff; border: 1px solid var(--border); color: var(--text);
+  padding: 6px 10px; border-radius: 8px; font-size: 13px; cursor: pointer; white-space: nowrap;
+  transition: border-color 140ms, color 140ms, background 140ms, transform 120ms;
+}
+.mp-btn-small:hover { border-color: var(--accent); color: var(--accent); background: #fff4f1; transform: translateY(-2px); }
+.mp-btn-small:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* skeleton */
+.mp-skeleton .mp-skl {
+  display: inline-block; height: 12px; width: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #eaeef2, #f3f6f9, #eaeef2);
+  background-size: 200% 100%;
+  animation: mp-pulse 1.2s ease-in-out infinite;
+}
+@keyframes mp-pulse { 0% {background-position: 0% 0;} 100% {background-position: -200% 0;} }
+
+/* scrollbar do container da tabela (webkit) */
+.mp-table-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.mp-table-scroll::-webkit-scrollbar-track { background: #e2e7ec; }
+.mp-table-scroll::-webkit-scrollbar-thumb {
+  background: #c2c9d1;
+  border-radius: 999px;
+  border: 2px solid #e2e7ec;
+}
+.mp-table-scroll::-webkit-scrollbar-thumb:hover { background: #b3bac2; }

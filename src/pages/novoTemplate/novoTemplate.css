@@ -196,14 +196,14 @@
   background: #fff;
 }
 
-/* Faz o conteúdo rolar dentro do main */
+/* faz o conteúdo rolar dentro do main */
 .template-new-page main.home-main {
   flex: 1;
   overflow-y: auto;
   padding-bottom: 80px; /* espaço pro final do scroll */
 }
 
-/* Garante que o container interno não trave o scroll */
+/* garante que o container interno não trave o scroll */
 .template-new-page main.home-main .container {
   min-height: 100%;
   

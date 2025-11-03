@@ -37,7 +37,7 @@
 
 html, body {
   height: 100%;
-  color-scheme: dark; /* sugere tema escuro para controles nativos */
+  color-scheme: dark;
 }
 
 body {
@@ -73,7 +73,7 @@ body::before {
   opacity: .5;
 }
 
-/* container responsivo (desktop fixo, mobile fluido) */
+
 .login-container {
   width: min(520px, 100%);
   max-width: 520px;

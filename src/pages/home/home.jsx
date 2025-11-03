@@ -13,16 +13,16 @@ export default function Home() {
   const [error, setError] = useState('')
 
   // Data
-  const [templates, setTemplates] = useState([]) // [{id, nome}]
-  const [stages, setStages] = useState([]) // [{id, template_id, ordem, nome}]
-  const [processes, setProcesses] = useState([]) // [{id, template_id, status, criado_por, criado_em}]
-  const [processStages, setProcessStages] = useState([]) // [{id, process_id, stage_id, atribuido_para, status, ...}]
-  const [creators, setCreators] = useState([]) // minimal info dos criadores [{id, nome, email}]
+  const [templates, setTemplates] = useState([]) 
+  const [stages, setStages] = useState([]) 
+  const [processes, setProcesses] = useState([]) 
+  const [processStages, setProcessStages] = useState([]) 
+  const [creators, setCreators] = useState([]) 
 
   // Filtros
-  const [statusFiltro, setStatusFiltro] = useState('todos') // todos | em_andamento | concluido
+  const [statusFiltro, setStatusFiltro] = useState('todos') 
   const [templateFiltro, setTemplateFiltro] = useState('todos') // id ou 'todos'
-  const [dataFiltro, setDataFiltro] = useState('all') // all | today | 7d | month
+  const [dataFiltro, setDataFiltro] = useState('all') 
   const [busca, setBusca] = useState('')
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -34,13 +34,13 @@ export default function Home() {
         setLoading(true)
         setError('')
 
-        // 1) Usuário autenticado do Supabase Auth
+        // usuário autenticado do Supabase Auth
         const { data: userData, error: userErr } = await supabase.auth.getUser()
         if (userErr) throw userErr
         const u = userData?.user ?? null
         setAuthUser(u)
 
-        // 2) Linha do usuário na tabela public.users (mapeia uuid -> id numérico)
+        // linha do usuário na tabela public.users
         let appUserRow = null
         if (u?.id) {
           const { data: appU, error: appUErr } = await supabase
@@ -53,7 +53,7 @@ export default function Home() {
           setAppUser(appU)
         }
 
-        // 3) Templates
+        // templates
         const { data: tmpl, error: tmplErr } = await supabase
           .from('templates')
           .select('id, nome')
@@ -61,14 +61,14 @@ export default function Home() {
         if (tmplErr) throw tmplErr
         setTemplates(Array.isArray(tmpl) ? tmpl : [])
 
-        // 4) Stages (etapas)
+        // etapas
         const { data: stg, error: stgErr } = await supabase
           .from('stages')
           .select('id, template_id, ordem, nome')
         if (stgErr) throw stgErr
         setStages(Array.isArray(stg) ? stg : [])
 
-        // 5) Processes
+        // processos
         const { data: procs, error: procsErr } = await supabase
           .from('processes')
           .select('id, template_id, status, criado_por, criado_em')
@@ -77,7 +77,7 @@ export default function Home() {
         const listProcs = Array.isArray(procs) ? procs : []
         setProcesses(listProcs)
 
-        // 6) Process stages para os processos carregados
+        // process stages
         const procIds = listProcs.map(p => p.id)
         let listPS = []
         if (procIds.length) {
@@ -90,7 +90,7 @@ export default function Home() {
         }
         setProcessStages(listPS)
 
-        // 7) Criadores (users) dos processos, para exibir na seção extra
+        // criadores dos processos
         const creatorIds = Array.from(new Set(listProcs.map(p => p.criado_por).filter(Boolean)))
         if (creatorIds.length) {
           const { data: usersRows, error: usersErr } = await supabase
@@ -116,7 +116,7 @@ export default function Home() {
   const myUserId = appUser?.id ?? null
   const nomeUsuario = appUser?.nome || authUser?.user_metadata?.name || authUser?.email || 'Usuário'
 
-  // Mapas auxiliares
+  // mapas auxiliares
   const templatesById = useMemo(() => {
     const m = new Map()
     templates.forEach(t => m.set(t.id, t))
@@ -152,7 +152,7 @@ export default function Home() {
     return m
   }, [processStages, stagesById])
 
-  // Status normalizado
+  // status normalizado
   function normalizaStatus(str) {
     if (!str) return '—'
     const v = String(str).toLowerCase()
@@ -162,18 +162,18 @@ export default function Home() {
     return str
   }
 
-  // Etapa atual do processo
+  // etapa atual do processo
   function etapaAtualDoProcesso(proc) {
     const list = processStagesByProcessId.get(proc.id) || []
     if (!list.length) return '—'
 
-    // Primeiro que NÃO está concluído; se nenhum, então está concluído
+    // se houver etapas não concluídas, retorna a primeira não concluída
     const notDone = list.filter(ps => normalizaStatus(ps.status) !== 'Concluído')
     if (notDone.length) {
       const stage = stagesById.get(notDone[0].stage_id)
       return stage?.nome || '—'
     }
-    // Se todas concluídas, retorna a última etapa pelo maior 'ordem'
+    // se todas concluídas, retorna a última etapa pelo maior 'ordem'
     const last = list[list.length - 1]
     const stage = stagesById.get(last.stage_id)
     return stage?.nome || '—'
@@ -191,13 +191,13 @@ export default function Home() {
     navigate('/login')
   }
 
-  // Resumo
+  // resumo
   const { emAndamentoCount, concluidosCount, meusCount } = useMemo(() => {
     const emAndamento = processes.filter(p => normalizaStatus(p.status) === 'Em andamento').length
     const concluidos = processes.filter(p => normalizaStatus(p.status) === 'Concluído').length
 
     const meus = processes.filter(p => {
-      // Considera "meus" se fui criador OU tenho alguma etapa atribuída para mim
+      // considera meus se fui criador ou tenho alguma etapa atribuída para mim
       const souCriador = myUserId && p.criado_por === myUserId
       const tenhoEtapa = myUserId && (processStagesByProcessId.get(p.id) || []).some(ps => ps.atribuido_para === myUserId)
       return souCriador || tenhoEtapa
@@ -206,9 +206,9 @@ export default function Home() {
     return { emAndamentoCount: emAndamento, concluidosCount: concluidos, meusCount: meus }
   }, [processes, myUserId, processStagesByProcessId])
 
-  // Filtragem principal
+  // filtragem principal
   const processosDecorados = useMemo(() => {
-    // Enriquecidos com nomes
+    // enriquecidos com nomes
     return processes.map(p => {
       const template = templatesById.get(p.template_id)
       return {
@@ -264,7 +264,7 @@ export default function Home() {
     return list
   }, [processosDecorados, statusFiltro, templateFiltro, dataFiltro, busca])
 
-  // "Atribuídos a mim": linhas a partir de process_stages
+  // atribuídos a mim
   const atribuídosParaMim = useMemo(() => {
     if (!myUserId) return []
     const meusPS = processStages.filter(ps => ps.atribuido_para === myUserId && normalizaStatus(ps.status) !== 'Concluído')
@@ -285,11 +285,16 @@ export default function Home() {
 
   return (
     <div className="home-page">
-        <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} onNavigate={navigate} />
+        <Sidebar
+  open={sidebarOpen}
+  setOpen={setSidebarOpen}
+  onNavigate={navigate}
+  userCargo={appUser?.cargo} // habilita "Gerenciar cargos" quando meu cargo permitir
+/>
       <header className="home-header">
         <div className="container">
           <div className="brand">
-            <img src="/logo.svg" alt="Logo" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+            <img src="https://i.imgur.com/BQxiVns.png" alt="Logo" onError={(e) => { e.currentTarget.style.display = 'none' }} />
             <span className="brand-name">Flowa</span>
           </div>
 
@@ -307,7 +312,7 @@ export default function Home() {
         <div className="container">
           {error && <div className="alert error">{error}</div>}
 
-          {/* Resumo */}
+          {/* resumo */}
           <section className="resumo">
             <div className="resumo-card">
               <span className="dot dot-yellow" aria-hidden>●</span>
@@ -332,14 +337,14 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Ações */}
+          {/* ações */}
           <section className="toolbar-top">
             <button className="btn-primary" onClick={handleNovoProcesso}>
               <span className="plus">+</span> Novo Processo
             </button>
           </section>
 
-          {/* Filtros */}
+          {/* filtros */}
           <section className="filtros">
             <div className="field">
               <label>Status</label>
@@ -384,7 +389,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Tabela principal */}
+          {/* tabela principal */}
           <section className="tabela-card">
             <div className="tabela-head">
               <h3>Processos</h3>
@@ -431,7 +436,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Seção extra: atribuídos a mim */}
+          {/* atribuídos a mim */}
           <section className="extra-section">
             <div className="section-title">
               <span className="bell"></span>

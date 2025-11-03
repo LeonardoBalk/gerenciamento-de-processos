@@ -148,12 +148,17 @@ export default function TemplateNew() {
 
   return (
     <div className="template-new-page">
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} onNavigate={navigate} />
+      <Sidebar
+  open={sidebarOpen}
+  setOpen={setSidebarOpen}
+  onNavigate={navigate}
+  userCargo={appUser?.cargo} // habilita o item "Gerenciar cargos" quando meu cargo permitir
+/>
 
       <header className="home-header">
         <div className="container">
           <div className="brand">
-            <img src="/logo.svg" alt="Logo" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+            <img src="https://i.imgur.com/BQxiVns.png" alt="Logo" onError={(e) => { e.currentTarget.style.display = 'none' }} />
             <span className="brand-name">Flowa</span>
           </div>
 
