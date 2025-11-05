@@ -111,8 +111,6 @@ graph TD
 src/
   lib/
     supabase.js
-    auth/
-      signup.js                # cadastro idempotente (opcional, se usado)
   components/
     sidebar/
       sidebar.jsx
